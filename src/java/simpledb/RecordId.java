@@ -56,7 +56,7 @@ public class RecordId implements Serializable {
         if(o==null) return false;
         if(!(o instanceof RecordId)) return false;
         RecordId rId=(RecordId) o;
-        return rId.getPageId()==getPageId()&&rId.tupleno()==tupleno();
+        return rId.getPageId().equals(this.getPageId())&&rId.tupleno()==this.tupleno();
     }
 
     /**
