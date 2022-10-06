@@ -55,8 +55,9 @@ public class HeapPageId implements PageId {
      */
     public boolean equals(Object o) {
         // some code goes here
-        if (!(o instanceof HeapPageId p))
+        if (!(o instanceof HeapPageId))
             return false;
+        HeapPageId p = (HeapPageId)o;
         return tableid == p.tableid && pgNo == p.pgNo;
     }
 
