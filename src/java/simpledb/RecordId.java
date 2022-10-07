@@ -55,8 +55,8 @@ public class RecordId implements Serializable {
         //throw new UnsupportedOperationException("implement this");
         if(o==null) return false;
         if(!(o instanceof RecordId)) return false;
-        RecordId rId=(RecordId) o;
-        return rId.getPageId().equals(this.getPageId())&&rId.tupleno()==this.tupleno();
+        RecordId rid=(RecordId) o;
+        return rid.getPageId().equals(this.getPageId())&&rid.tupleno()==this.tupleno();
     }
 
     /**

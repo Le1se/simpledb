@@ -27,7 +27,7 @@ public class BufferPool {
     constructor instead. */
     public static final int DEFAULT_PAGES = 50;
 
-    private ConcurrentHashMap<PageId,Page> cache;
+    private final ConcurrentHashMap<PageId,Page> cache;
     private final int numPages;
 
     /**
