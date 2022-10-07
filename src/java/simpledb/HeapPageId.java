@@ -42,8 +42,7 @@ public class HeapPageId implements PageId {
     public int hashCode() {
         // some code goes here
         //throw new UnsupportedOperationException("implement this");
-        int code = (tableid << 16) + pgNo;
-        return code;
+        return (tableid << 16) + pgNo;
     }
 
     /**

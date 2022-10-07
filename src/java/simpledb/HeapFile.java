@@ -71,25 +71,13 @@ public class HeapFile implements DbFile {
     // see DbFile.java for javadocs
     public Page readPage(PageId pid) {
         // some code goes here
-        try {
-            RandomAccessFile raf = new RandomAccessFile(file,"r");
-            int offset = BufferPool.getPageSize() * pid.pageNumber();
-            byte[] data = new byte[BufferPool.getPageSize()];
-            if (offset + BufferPool.getPageSize() > raf.length()) {
-                System.err.println("page offset exceeds max size");
-                System.exit(1);
-            }
-            raf.seek(offset);
-            raf.readFully(data);
-            raf.close();
-            return new HeapPage((HeapPageId)pid, data);
-        } catch (FileNotFoundException e) {
-            System.err.println("File not found");
-            e.printStackTrace();
-            throw new IllegalArgumentException();
-        }catch (IOException e) {
-            System.err.println("IO Exception");
-            throw new IllegalArgumentException();
+        try (RandomAccessFile raf = new RandomAccessFile(file, "r")) {
+            byte[] buffer = new byte[BufferPool.getPageSize()];
+            raf.seek((long) pid.pageNumber() * BufferPool.getPageSize());
+            raf.read(buffer);
+            return new HeapPage((HeapPageId) pid, buffer);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Read page error");
         }
     }
 
@@ -104,7 +92,7 @@ public class HeapFile implements DbFile {
      */
     public int numPages() {
         // some code goes here
-        return (int) (file.length()/BufferPool.getPageSize());
+        return (int) file.length()/BufferPool.getPageSize();
     }
 
     // see DbFile.java for javadocs
@@ -126,14 +114,13 @@ public class HeapFile implements DbFile {
     // see DbFile.java for javadocs
     public DbFileIterator iterator(TransactionId tid) {
         // some code goes here
-        return new HeapFileIterator(this,tid);
+        return new HeapFileIterator(this, tid);
     }
-    class HeapFileIterator extends AbstractDbFileIterator {
-
+    static class HeapFileIterator extends AbstractDbFileIterator {
+        HeapFile heapFile;
+        TransactionId tid;
         Iterator<Tuple> iter=null;
         int pageNum=0;
-        TransactionId tid;
-        HeapFile heapFile;
 
         public HeapFileIterator(HeapFile heapFile, TransactionId tid) {
             this.heapFile = heapFile;

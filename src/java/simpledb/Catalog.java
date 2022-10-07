@@ -22,10 +22,10 @@ public class Catalog {
      * Constructor.
      * Creates a new, empty catalog.
      */
-    private  HashMap<Integer,DbFile> getFileByID;
-    private  HashMap<Integer,String> getNameByID;
-    private  HashMap<Integer,String> getKeyByID;
-    private  HashMap<String,Integer> getIDByName;
+    private final HashMap<Integer,DbFile> getFileByID;
+    private final HashMap<Integer,String> getNameByID;
+    private final HashMap<Integer,String> getKeyByID;
+    private final HashMap<String,Integer> getIDByName;
 
     public Catalog() {
         // some code goes here
@@ -76,8 +76,8 @@ public class Catalog {
      */
     public int getTableId(String name) throws NoSuchElementException {
         // some code goes here
-        if(!getIDByName.containsKey(name)) throw new NoSuchElementException("Table name doesn't exist.");
-        return getIDByName.get(name);
+        if(getIDByName.containsKey(name)) return getIDByName.get(name);
+        throw new NoSuchElementException("Table name doesn't exist.");
     }
 
     /**
@@ -100,14 +100,15 @@ public class Catalog {
      */
     public DbFile getDatabaseFile(int tableid) throws NoSuchElementException {
         // some code goes here
-        if(!getFileByID.containsKey(tableid)) throw new NoSuchElementException("No file with given id is found.");
-        return getFileByID.get(tableid);
+        if(getFileByID.containsKey(tableid)) return getFileByID.get(tableid);
+        throw new NoSuchElementException("No file with given id is found.");
+
     }
 
     public String getPrimaryKey(int tableid) {
         // some code goes here
         if(getKeyByID.containsKey(tableid)) return getKeyByID.get(tableid);
-        throw new NoSuchElementException("Primary Key not found.");
+        throw new NoSuchElementException("Primary Key with given tableID not found.");
     }
 
     public Iterator<Integer> tableIdIterator() {

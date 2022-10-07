@@ -14,11 +14,9 @@ java.lang.RuntimeException
 java.util.NoSuchElementException
 simpledb.TransactionAbortedException
 ||:simpledb.HeapFile
-java.io.PrintStream
+java.lang.Throwable
 java.io.RandomAccessFile
 simpledb.DbFile
-java.lang.System
-[B
 simpledb.DbException
 simpledb.HeapPageId
 simpledb.HeapFile
@@ -26,7 +24,6 @@ simpledb.HeapPage
 java.io.IOException
 java.lang.IllegalArgumentException
 java.io.File
-java.io.FileNotFoundException
 simpledb.BufferPool
 java.lang.Object
 simpledb.HeapFile$HeapFileIterator

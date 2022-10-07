@@ -69,7 +69,7 @@ public class RecordId implements Serializable {
     public int hashCode() {
         // some code goes here
         //throw new UnsupportedOperationException("implement this");
-        return pid.hashCode()+tupleno()*31;
+        return pid.hashCode()+tupleno()<<16;
     }
 
 }
