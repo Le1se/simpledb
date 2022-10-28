@@ -1,18 +1,16 @@
 1.Describe any design decisions you made. These may be minimal for pa1.
-Use ArrayList to implement TupleDesc since it's easy this way to acheive functions like iterator.
-Use 4 hashmaps to implement Catalog, same reason as above
-Use concurrentHashMap for Bufferpool since it provides thread-safe.
+PA2 design decision is using the given functions and follow the hints that functions have given us.
 
 2.Discuss and justify any changes you made to the API.
 Nothing.
 
 3.Describe any missing or incomplete elements of your code.
-I think no missing for PA1. It passes all java and ant tests.
-I didn't implement the hashcode() for TupleDesc since I haven't used it as keys in any HashMap.
+I think no missing for PA2. It passes all java and ant tests.
 
 4.Describe how long you spent on the assignment, and whether there was anything you found particularly difficult or confusing.
-About one day and a half for me, and roughly same for my teammate. We work together for most time.
-I think understanding the whole logic is most difficult.
+I spent about 4 hours to understand the structure and given functions,
+and about 7 hours to write my part and debug.
+My partner Hengrui Shi spent basically same time for his part.
 
 5.If you collaborate with someone else, you have to discribe how you split the workload.
 50% 50%
