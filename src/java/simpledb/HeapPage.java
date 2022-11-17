@@ -247,6 +247,14 @@ public class HeapPage implements Page {
     public void deleteTuple(Tuple t) throws DbException {
         // some code goes here
         // not necessary for lab1
+        PageId pid = t.getRecordId().getPageId();
+        int num = t.getRecordId().tupleno();
+        if (!(pid.equals(this.pid))) throw new DbException("No such tuple");
+        else if (num == -1) throw new DbException("Tuple has already been deleted");
+        else if (!(this.isSlotUsed(num))) throw new DbException("slot is empty");
+        t.setRecordId(new RecordId(pid, -1));
+        this.tuples[num] = null;
+        this.markSlotUsed(num, false);
     }
 
     /**
@@ -259,15 +267,26 @@ public class HeapPage implements Page {
     public void insertTuple(Tuple t) throws DbException {
         // some code goes here
         // not necessary for lab1
+        if (this.getNumEmptySlots() == 0) throw new DbException("Page is full");
+        else if (!(this.td.equals(t.getTupleDesc()))) throw new DbException("TupleDesc is dismatch");
+        int num = 0;
+        while (this.isSlotUsed(num)) num++;
+        this.tuples[num] = t;
+        this.markSlotUsed(num, true);
+        t.setRecordId(new RecordId(this.pid, num));
     }
 
     /**
      * Marks this page as dirty/not dirty and record that transaction
      * that did the dirtying
      */
+    private TransactionId dirtyId=null;
+
     public void markDirty(boolean dirty, TransactionId tid) {
         // some code goes here
 	// not necessary for lab1
+        if (dirty) this.dirtyId = tid;
+        else dirtyId = null;
     }
 
     /**
@@ -276,7 +295,9 @@ public class HeapPage implements Page {
     public TransactionId isDirty() {
         // some code goes here
 	// Not necessary for lab1
-        return null;      
+        //return null;
+        if (this.dirtyId != null) return dirtyId;
+        return null;
     }
 
     /**
@@ -308,6 +329,8 @@ public class HeapPage implements Page {
     private void markSlotUsed(int i, boolean value) {
         // some code goes here
         // not necessary for lab1
+        if (value) this.header[i/8] |= (1 << (i%8));
+        else this.header[i/8] &= ~(1 << (i % 8));
     }
 
     /**

@@ -1,4 +1,6 @@
 package simpledb;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Knows how to compute some aggregate over a set of StringFields.
@@ -6,6 +8,10 @@ package simpledb;
 public class StringAggregator implements Aggregator {
 
     private static final long serialVersionUID = 1L;
+    private int gbfield;
+    private Type gbfieldtype;
+    private int afield;
+    private ConcurrentHashMap<Field, Integer> fvMap;
 
     /**
      * Aggregate constructor
@@ -18,6 +24,13 @@ public class StringAggregator implements Aggregator {
 
     public StringAggregator(int gbfield, Type gbfieldtype, int afield, Op what) {
         // some code goes here
+        if (what != Aggregator.Op.COUNT) throw new
+                IllegalArgumentException("Illegal Operation");
+
+        this.gbfield = gbfield;
+        this.gbfieldtype = gbfieldtype;
+        this.afield = afield;
+        this.fvMap = new ConcurrentHashMap<>();
     }
 
     /**
@@ -26,6 +39,9 @@ public class StringAggregator implements Aggregator {
      */
     public void mergeTupleIntoGroup(Tuple tup) {
         // some code goes here
+        if (tup.getTupleDesc().getFieldType(this.gbfield).equals(this.gbfieldtype))
+            this.fvMap.put(tup.getField(this.gbfield), this.fvMap.getOrDefault(tup.getField(this.gbfield),0)+1);
+
     }
 
     /**
@@ -38,7 +54,18 @@ public class StringAggregator implements Aggregator {
      */
     public DbIterator iterator() {
         // some code goes here
-        throw new UnsupportedOperationException("please implement me for lab3");
+        //throw new UnsupportedOperationException("please implement me for lab3");
+        TupleDesc td = new TupleDesc(new Type[] {this.gbfieldtype, Type.INT_TYPE});
+        List<Tuple> TupleList = new ArrayList<>();
+        Enumeration<Field> keys = this.fvMap.keys();
+        while(keys.hasMoreElements()) {
+            Tuple t  = new Tuple(td);
+            Field f = keys.nextElement();
+            t.setField(0, f);
+            t.setField(1, new IntField(this.fvMap.get(f)));
+            TupleList.add(t);
+        }
+        return new TupleIterator(td, TupleList);
     }
 
 }
