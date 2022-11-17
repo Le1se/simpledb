@@ -119,7 +119,7 @@ public class SeqScan implements DbIterator {
         // some code goes here
 
         iter.close();
-        iter=null;
+        //iter=null;
     }
 
     public void rewind() throws DbException, NoSuchElementException,
