@@ -1,16 +1,18 @@
 1.Describe any design decisions you made. These may be minimal for pa1.
-PA2 design decision is using the given functions and follow the hints that functions have given us.
+Using ConcurrentHashMap to implement IntegerAggregator. And calculate the avg only when Op is AVG, still store sum in map and divide to avg in iterator.
+Other classes are design based on the descriptions before the functions.
 
 2.Discuss and justify any changes you made to the API.
 Nothing.
 
 3.Describe any missing or incomplete elements of your code.
-I think no missing for PA2. It passes all java and ant tests.
+I think no missing for PA3. It passes all java and ant tests.
 
 4.Describe how long you spent on the assignment, and whether there was anything you found particularly difficult or confusing.
-I spent about 4 hours to understand the structure and given functions,
-and about 7 hours to write my part and debug.
+We spilt our works in this PA.
+I spent about 1 day and some more time to implement my part and debug.
 My partner Hengrui Shi spent basically same time for his part.
+We work together to fix some bugs and run tests for about 3 hours.
 
 5.If you collaborate with someone else, you have to discribe how you split the workload.
 50% 50%
