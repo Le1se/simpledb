@@ -79,7 +79,6 @@ public class Insert extends Operator {
         if (tuple.getField(0) != null) {
             return null;
         }
-
         int num = 0;
         try {
             while (child.hasNext()) {
